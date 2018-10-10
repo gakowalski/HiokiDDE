@@ -34,7 +34,6 @@ __published:	// IDE-managed Components
 	TButton *SendRequest;
 	TLabel *Label3;
 	TIdTelnet *IdTelnet1;
-	TClientSocket *ClientSocket1;
 	void __fastcall SendRequestClick(TObject *Sender);
 	void __fastcall IdTCPClient1Connected(TObject *Sender);
 	void __fastcall IdTCPClient1Disconnected(TObject *Sender);
@@ -51,11 +50,7 @@ __published:	// IDE-managed Components
 
 private:	// User declarations
 	UnicodeString SendCommand(UnicodeString command);
-    UnicodeString WinsockSendCommand(
-		const UnicodeString & host,
-        const UnicodeString & port,
-        const UnicodeString & command
-	);
+
 public:		// User declarations
 	__fastcall TMainForm(TComponent* Owner);
 };

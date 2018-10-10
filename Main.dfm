@@ -55,7 +55,7 @@ object MainForm: TMainForm
       Width = 121
       Height = 21
       TabOrder = 0
-      Text = '127.0.0.1'
+      Text = '192.168.1.1'
     end
     object HiokiPort: TEdit
       Left = 128
@@ -74,35 +74,32 @@ object MainForm: TMainForm
     Caption = 'Manualna komunikacja z urz'#261'dzeniem'
     TabOrder = 2
     object Label3: TLabel
-      Left = 13
+      Left = 54
       Top = 23
-      Width = 93
+      Width = 52
       Height = 13
       Alignment = taRightJustify
-      Caption = 'Wybierz zapytanie:'
+      Caption = 'Zapytanie:'
     end
     object CommandList: TComboBox
       Left = 112
       Top = 20
       Width = 145
       Height = 21
+      ItemIndex = 0
       TabOrder = 0
-      Text = ':VOLTAGE1?'
+      Text = '*IDN?'
       Items.Strings = (
-        'GET /bitnami.css HTTP/1.0'
-        ':CURRENT1?'
-        ':CURRENT2?'
-        ':CURRENT3?'
-        ':DISPLAY?'
+        '*IDN?'
+        '*OPT?'
         ':HEADER ON'
         ':HEADER OFF'
-        ':FREQUENCY1?'
-        ':FREQUENCY2?'
-        ':FREQUENCY3?'
-        ':MEASURE:POWER?'
-        ':VOLTAGE1?'
-        ':VOLTAGE2?'
-        ':VOLTAGE3?')
+        ':MEAS? U1,I1,P1'
+        ':MEAS? I1,I2,I3,P1,P2,P3,U1,U2,U3'
+        ':MEAS? ITAV1,ITAV2,ITAV3,PTAV1,PTAV2,PTAV3'
+        
+          ':MEAS? I1,I2,I3,P1,P2,P3,U1,U2,U3,ITAV1,ITAV2,ITAV3,PTAV1,PTAV2,' +
+          'PTAV3')
     end
     object SendRequest: TButton
       Left = 112
@@ -151,16 +148,6 @@ object MainForm: TMainForm
     OnDataAvailable = IdTelnet1DataAvailable
     Terminal = 'dumb'
     Left = 16
-    Top = 160
-  end
-  object ClientSocket1: TClientSocket
-    Active = False
-    ClientType = ctBlocking
-    Port = 0
-    OnConnect = ClientSocket1Connect
-    OnDisconnect = ClientSocket1Disconnect
-    OnError = ClientSocket1Error
-    Left = 128
     Top = 160
   end
 end
