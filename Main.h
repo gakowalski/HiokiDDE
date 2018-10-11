@@ -15,14 +15,13 @@
 #include <IdTelnet.hpp>
 #include <IdGlobal.hpp>
 #include <System.Win.ScktComp.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <vector>
 //---------------------------------------------------------------------------
 class TMainForm : public TForm
 {
 __published:	// IDE-managed Components
-	TMemo *OutputDDE;
-	TDdeServerConv *Time;
-	TDdeServerItem *Current;
-	TIdTCPClient *IdTCPClient1;
+	TDdeServerConv *Pomiary;
 	TGroupBox *GroupBox1;
 	TEdit *HiokiIP;
 	TEdit *HiokiPort;
@@ -34,22 +33,36 @@ __published:	// IDE-managed Components
 	TButton *SendRequest;
 	TLabel *Label3;
 	TIdTelnet *IdTelnet1;
+	TGroupBox *GroupBox3;
+	TButton *MeasureStart;
+	TButton *MeasureStop;
+	TLabel *Label_for_MeasureQuery;
+	TTimer *MeasureAction;
+	TEdit *MeasureQuery;
+	TButton *Button1;
+	TButton *Button2;
+	TCheckBox *DotToComma;
 	void __fastcall SendRequestClick(TObject *Sender);
 	void __fastcall IdTCPClient1Connected(TObject *Sender);
 	void __fastcall IdTCPClient1Disconnected(TObject *Sender);
-	void __fastcall IdTelnet1TelnetCommand(TIdTelnet *Sender, TIdTelnetCommand Status);
 	void __fastcall IdTelnet1DataAvailable(TIdTelnet *Sender, const TIdBytes Buffer);
 	void __fastcall ClientSocket1Connect(TObject *Sender, TCustomWinSocket *Socket);
 	void __fastcall ClientSocket1Disconnect(TObject *Sender, TCustomWinSocket *Socket);
 	void __fastcall ClientSocket1Error(TObject *Sender, TCustomWinSocket *Socket, TErrorEvent ErrorEvent,
           int &ErrorCode);
+	void __fastcall MeasureStartClick(TObject *Sender);
+	void __fastcall MeasureStopClick(TObject *Sender);
+	void __fastcall MeasureActionTimer(TObject *Sender);
+	void __fastcall Button1Click(TObject *Sender);
+	void __fastcall Button2Click(TObject *Sender);
 
 
 
 
 
 private:	// User declarations
-	UnicodeString SendCommand(UnicodeString command);
+	bool SendCommand(UnicodeString command);
+    std::vector<TDdeServerItem *> dde_items;
 
 public:		// User declarations
 	__fastcall TMainForm(TComponent* Owner);

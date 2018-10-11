@@ -4,8 +4,8 @@ object MainForm: TMainForm
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Hioki DDE'
-  ClientHeight = 256
-  ClientWidth = 548
+  ClientHeight = 371
+  ClientWidth = 634
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,21 +15,13 @@ object MainForm: TMainForm
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object OutputDDE: TMemo
-    Left = 8
-    Top = 95
-    Width = 265
-    Height = 153
-    ScrollBars = ssVertical
-    TabOrder = 0
-  end
   object GroupBox1: TGroupBox
     Left = 8
     Top = 8
     Width = 265
     Height = 81
     Caption = 'Konfiguracja po'#322#261'czenia'
-    TabOrder = 1
+    TabOrder = 0
     object Label1: TLabel
       Left = 22
       Top = 23
@@ -72,7 +64,7 @@ object MainForm: TMainForm
     Width = 265
     Height = 81
     Caption = 'Manualna komunikacja z urz'#261'dzeniem'
-    TabOrder = 2
+    TabOrder = 1
     object Label3: TLabel
       Left = 54
       Top = 23
@@ -86,7 +78,6 @@ object MainForm: TMainForm
       Top = 20
       Width = 145
       Height = 21
-      ItemIndex = 0
       TabOrder = 0
       Text = '*IDN?'
       Items.Strings = (
@@ -94,12 +85,8 @@ object MainForm: TMainForm
         '*OPT?'
         ':HEADER ON'
         ':HEADER OFF'
-        ':MEAS? U1,I1,P1'
-        ':MEAS? I1,I2,I3,P1,P2,P3,U1,U2,U3'
-        ':MEAS? ITAV1,ITAV2,ITAV3,PTAV1,PTAV2,PTAV3'
-        
-          ':MEAS? I1,I2,I3,P1,P2,P3,U1,U2,U3,ITAV1,ITAV2,ITAV3,PTAV1,PTAV2,' +
-          'PTAV3')
+        ':MEAS?'
+        ':HEADER ON;:MEAS?')
     end
     object SendRequest: TButton
       Left = 112
@@ -112,42 +99,102 @@ object MainForm: TMainForm
     end
   end
   object OutputTCP: TMemo
-    Left = 279
-    Top = 95
-    Width = 265
-    Height = 153
+    Left = 0
+    Top = 215
+    Width = 634
+    Height = 156
+    Align = alBottom
     ScrollBars = ssVertical
+    TabOrder = 2
+  end
+  object GroupBox3: TGroupBox
+    Left = 8
+    Top = 95
+    Width = 536
+    Height = 114
+    Caption = 'Pomiar'
     TabOrder = 3
+    object Label_for_MeasureQuery: TLabel
+      Left = 22
+      Top = 61
+      Width = 269
+      Height = 13
+      Caption = 'Warto'#347'ci do pomiaru zapytaniem ":HEADER ON;MEAS?":'
+    end
+    object MeasureStart: TButton
+      Left = 16
+      Top = 24
+      Width = 75
+      Height = 25
+      Caption = 'Rozpocznij'
+      TabOrder = 0
+      OnClick = MeasureStartClick
+    end
+    object MeasureStop: TButton
+      Left = 97
+      Top = 24
+      Width = 75
+      Height = 25
+      Caption = 'Zatrzymaj'
+      Enabled = False
+      TabOrder = 1
+      OnClick = MeasureStopClick
+    end
+    object MeasureQuery: TEdit
+      Left = 16
+      Top = 80
+      Width = 505
+      Height = 21
+      TabOrder = 2
+      Text = 
+        'UFND1,UFND2,UFND3,IFND1,IFND2,IFND3,PFDN1,PFDN2,PFND3,PTAV0,ITAV' +
+        '1,ITAV2,ITAV3'
+    end
+    object Button2: TButton
+      Left = 446
+      Top = 49
+      Width = 75
+      Height = 25
+      Caption = 'Test DDE'
+      TabOrder = 3
+      OnClick = Button2Click
+    end
+    object DotToComma: TCheckBox
+      Left = 336
+      Top = 26
+      Width = 185
+      Height = 17
+      Caption = 'DDE: Zamie'#324' kropk'#281' na przecinek'
+      Checked = True
+      State = cbChecked
+      TabOrder = 4
+    end
   end
-  object Time: TDdeServerConv
-    Left = 16
-    Top = 208
+  object Button1: TButton
+    Left = 550
+    Top = 184
+    Width = 75
+    Height = 25
+    Caption = 'Wyczy'#347#263
+    TabOrder = 4
+    OnClick = Button1Click
   end
-  object Current: TDdeServerItem
-    ServerConv = Time
-    Text = 'TEST'
-    Lines.Strings = (
-      'TEST')
-    Left = 72
-    Top = 208
-  end
-  object IdTCPClient1: TIdTCPClient
-    OnDisconnected = IdTCPClient1Disconnected
-    OnConnected = IdTCPClient1Connected
-    ConnectTimeout = 0
-    IPVersion = Id_IPv4
-    Port = 0
-    ReadTimeout = -1
-    Left = 72
-    Top = 160
+  object Pomiary: TDdeServerConv
+    Left = 64
+    Top = 224
   end
   object IdTelnet1: TIdTelnet
     OnDisconnected = IdTCPClient1Disconnected
     OnConnected = IdTCPClient1Connected
-    OnTelnetCommand = IdTelnet1TelnetCommand
     OnDataAvailable = IdTelnet1DataAvailable
     Terminal = 'dumb'
     Left = 16
-    Top = 160
+    Top = 224
+  end
+  object MeasureAction: TTimer
+    Enabled = False
+    OnTimer = MeasureActionTimer
+    Left = 128
+    Top = 224
   end
 end
