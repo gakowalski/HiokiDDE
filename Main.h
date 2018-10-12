@@ -16,7 +16,8 @@
 #include <IdGlobal.hpp>
 #include <System.Win.ScktComp.hpp>
 #include <Vcl.ExtCtrls.hpp>
-#include <vector>
+#include <IniFiles.hpp>
+#include <StrUtils.hpp>
 //---------------------------------------------------------------------------
 class TMainForm : public TForm
 {
@@ -39,9 +40,11 @@ __published:	// IDE-managed Components
 	TLabel *Label_for_MeasureQuery;
 	TTimer *MeasureAction;
 	TEdit *MeasureQuery;
-	TButton *Button1;
-	TButton *Button2;
+	TButton *ClearOutputTCP;
 	TCheckBox *DotToComma;
+	TButton *SaveSettings;
+	TButton *RestoreSettings;
+	TButton *TestDDE;
 	void __fastcall SendRequestClick(TObject *Sender);
 	void __fastcall IdTCPClient1Connected(TObject *Sender);
 	void __fastcall IdTCPClient1Disconnected(TObject *Sender);
@@ -53,8 +56,10 @@ __published:	// IDE-managed Components
 	void __fastcall MeasureStartClick(TObject *Sender);
 	void __fastcall MeasureStopClick(TObject *Sender);
 	void __fastcall MeasureActionTimer(TObject *Sender);
-	void __fastcall Button1Click(TObject *Sender);
-	void __fastcall Button2Click(TObject *Sender);
+	void __fastcall ClearOutputTCPClick(TObject *Sender);
+	void __fastcall TestDDEClick(TObject *Sender);
+	void __fastcall RestoreSettingsClick(TObject *Sender);
+	void __fastcall SaveSettingsClick(TObject *Sender);
 
 
 
@@ -62,9 +67,9 @@ __published:	// IDE-managed Components
 
 private:	// User declarations
 	bool SendCommand(UnicodeString command);
-    std::vector<TDdeServerItem *> dde_items;
 
 public:		// User declarations
+	TIniFile * settings;
 	__fastcall TMainForm(TComponent* Owner);
 };
 //---------------------------------------------------------------------------

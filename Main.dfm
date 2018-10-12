@@ -54,6 +54,9 @@ object MainForm: TMainForm
       Top = 47
       Width = 121
       Height = 21
+      Hint = 'Domy'#347'lny port to 3300'
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 1
       Text = '3300'
     end
@@ -104,6 +107,13 @@ object MainForm: TMainForm
     Width = 634
     Height = 156
     Align = alBottom
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Courier New'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 2
   end
@@ -145,42 +155,64 @@ object MainForm: TMainForm
       Top = 80
       Width = 505
       Height = 21
+      CharCase = ecUpperCase
       TabOrder = 2
       Text = 
-        'UFND1,UFND2,UFND3,IFND1,IFND2,IFND3,PFDN1,PFDN2,PFND3,PTAV0,ITAV' +
-        '1,ITAV2,ITAV3'
-    end
-    object Button2: TButton
-      Left = 446
-      Top = 49
-      Width = 75
-      Height = 25
-      Caption = 'Test DDE'
-      TabOrder = 3
-      OnClick = Button2Click
+        'UFND1,UFND2,UFND3,IFND1,IFND2,IFND3,PMN1,PMN2,PMN3,PTAV0,ITAV1,I' +
+        'TAV2,ITAV3'
     end
     object DotToComma: TCheckBox
-      Left = 336
+      Left = 348
       Top = 26
       Width = 185
       Height = 17
       Caption = 'DDE: Zamie'#324' kropk'#281' na przecinek'
       Checked = True
       State = cbChecked
-      TabOrder = 4
+      TabOrder = 3
     end
   end
-  object Button1: TButton
+  object ClearOutputTCP: TButton
     Left = 550
-    Top = 184
+    Top = 103
     Width = 75
-    Height = 25
-    Caption = 'Wyczy'#347#263
+    Height = 53
+    Caption = 'Wyczy'#347#263' podgl'#261'd komunikat'#243'w'
     TabOrder = 4
-    OnClick = Button1Click
+    WordWrap = True
+    OnClick = ClearOutputTCPClick
+  end
+  object SaveSettings: TButton
+    Left = 551
+    Top = 55
+    Width = 75
+    Height = 42
+    Caption = 'Zachowaj ustawienia'
+    TabOrder = 5
+    WordWrap = True
+    OnClick = SaveSettingsClick
+  end
+  object RestoreSettings: TButton
+    Left = 551
+    Top = 8
+    Width = 75
+    Height = 41
+    Caption = 'Przywr'#243#263' ustawienia'
+    TabOrder = 6
+    WordWrap = True
+    OnClick = RestoreSettingsClick
+  end
+  object TestDDE: TButton
+    Left = 551
+    Top = 162
+    Width = 75
+    Height = 47
+    Caption = 'Test DDE'
+    TabOrder = 7
+    OnClick = TestDDEClick
   end
   object Pomiary: TDdeServerConv
-    Left = 64
+    Left = 72
     Top = 224
   end
   object IdTelnet1: TIdTelnet
@@ -194,7 +226,7 @@ object MainForm: TMainForm
   object MeasureAction: TTimer
     Enabled = False
     OnTimer = MeasureActionTimer
-    Left = 128
+    Left = 136
     Top = 224
   end
 end

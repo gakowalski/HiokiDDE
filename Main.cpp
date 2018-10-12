@@ -1,7 +1,6 @@
 //---------------------------------------------------------------------------
 
 #include <vcl.h>
-#include <StrUtils.hpp>
 #pragma hdrstop
 
 #include "Main.h"
@@ -18,28 +17,19 @@ UnicodeString get_command(UnicodeString command) {
 }
 
 bool TMainForm::SendCommand(UnicodeString command) {
-	OutputTCP->Lines->Add("Wysy³am zapytanie do miernika:");
-    OutputTCP->Lines->Add(command);
+	OutputTCP->Lines->Add("Wysy³am zapytanie do miernika: " + command);
 
-    TIdTCPClientCustom * client;
-
-    //client = IdTCPClient1;
-    client = IdTelnet1;
-
-    if (client->Connected() == false) {
-        //client->Host = HiokiIP->Text;
-        //client->Port = HiokiPort->Text.ToInt();
-        //client->Connect();
+    if (IdTelnet1->Connected() == false) {
         try {
-			client->Connect(HiokiIP->Text, HiokiPort->Text.ToInt());
+			IdTelnet1->Connect(HiokiIP->Text, HiokiPort->Text.ToInt());
         } catch (EIdSocketError &e) {
           	OutputTCP->Lines->Add(e.ToString());
             return false;
         }
     }
 
- 	if (client->Connected()) {
-        client->IOHandler->Write(get_command(command));
+ 	if (IdTelnet1->Connected()) {
+        IdTelnet1->IOHandler->Write(get_command(command));
         OutputTCP->Lines->Add("Zapytanie wys³ane.");
 	} else {
         OutputTCP->Lines->Add("Utracono po³¹czenie!");
@@ -53,6 +43,9 @@ bool TMainForm::SendCommand(UnicodeString command) {
 __fastcall TMainForm::TMainForm(TComponent* Owner)
 	: TForm(Owner)
 {
+    Application->ShowHint = true;
+	settings = new TIniFile(ChangeFileExt(Application->ExeName, ".ini"));
+    RestoreSettingsClick(this);
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::SendRequestClick(TObject *Sender)
@@ -75,6 +68,7 @@ void __fastcall TMainForm::IdTelnet1DataAvailable(TIdTelnet *Sender, const TIdBy
 
 {
     UnicodeString response = BytesToString(Buffer);
+    response = response.TrimRight();
 
     OutputTCP->Lines->Add("OdpowiedŸ z miernika:");
 	OutputTCP->Lines->Add(response);
@@ -161,13 +155,13 @@ void __fastcall TMainForm::MeasureActionTimer(TObject *Sender)
 
 
 
-void __fastcall TMainForm::Button1Click(TObject *Sender)
+void __fastcall TMainForm::ClearOutputTCPClick(TObject *Sender)
 {
     OutputTCP->Lines->Clear();
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TMainForm::Button2Click(TObject *Sender)
+void __fastcall TMainForm::TestDDEClick(TObject *Sender)
 {
     TStringDynArray values = SplitString(MeasureQuery->Text, ",");
     for (int i = 0; i < values.Length; i++) {
@@ -195,6 +189,28 @@ void __fastcall TMainForm::Button2Click(TObject *Sender)
         }
     }
 
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainForm::RestoreSettingsClick(TObject *Sender)
+{
+    HiokiIP->Text = settings->ReadString("Connection", "IP", HiokiIP->Text);
+    HiokiPort->Text = settings->ReadString("Connection", "Port", HiokiPort->Text);
+
+    MeasureQuery->Text = settings->ReadString("Measurements", "Query", MeasureQuery->Text);
+    MeasureAction->Interval = settings->ReadInteger("Measurements", "Interval", MeasureAction->Interval);
+
+    DotToComma->Checked = settings->ReadBool("DDE", "ConvertDotToComma", DotToComma->Checked);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainForm::SaveSettingsClick(TObject *Sender)
+{
+    settings->WriteString("Connection", "IP", HiokiIP->Text);
+    settings->WriteString("Connection", "Port", HiokiPort->Text);
+    settings->WriteString("Measurements", "Query", MeasureQuery->Text);
+    settings->WriteInteger("Measurements", "Interval", MeasureAction->Interval);
+    settings->WriteBool("DDE", "ConvertDotToComma", DotToComma->Checked);
 }
 //---------------------------------------------------------------------------
 
