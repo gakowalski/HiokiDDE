@@ -45,6 +45,7 @@ __published:	// IDE-managed Components
 	TButton *SaveSettings;
 	TButton *RestoreSettings;
 	TButton *TestDDE;
+	TCheckBox *ShowLastCommandOnly;
 	void __fastcall SendRequestClick(TObject *Sender);
 	void __fastcall IdTCPClient1Connected(TObject *Sender);
 	void __fastcall IdTCPClient1Disconnected(TObject *Sender);
@@ -60,6 +61,8 @@ __published:	// IDE-managed Components
 	void __fastcall TestDDEClick(TObject *Sender);
 	void __fastcall RestoreSettingsClick(TObject *Sender);
 	void __fastcall SaveSettingsClick(TObject *Sender);
+	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+
 
 
 
@@ -67,6 +70,7 @@ __published:	// IDE-managed Components
 
 private:	// User declarations
 	bool SendCommand(UnicodeString command);
+    void log(UnicodeString & message, bool force);
 
 public:		// User declarations
 	TIniFile * settings;

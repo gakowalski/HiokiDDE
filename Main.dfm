@@ -13,6 +13,7 @@ object MainForm: TMainForm
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
@@ -162,14 +163,24 @@ object MainForm: TMainForm
         'TAV2,ITAV3'
     end
     object DotToComma: TCheckBox
-      Left = 348
-      Top = 26
+      Left = 336
+      Top = 18
       Width = 185
       Height = 17
       Caption = 'DDE: Zamie'#324' kropk'#281' na przecinek'
       Checked = True
       State = cbChecked
       TabOrder = 3
+    end
+    object ShowLastCommandOnly: TCheckBox
+      Left = 336
+      Top = 41
+      Width = 185
+      Height = 17
+      Caption = 'Pokazuj tylko ostatni komunikat'
+      Checked = True
+      State = cbChecked
+      TabOrder = 4
     end
   end
   object ClearOutputTCP: TButton

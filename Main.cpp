@@ -16,7 +16,17 @@ UnicodeString get_command(UnicodeString command) {
     return StringReplace(tmp, "\\r", "\r", TReplaceFlags() << rfReplaceAll);
 }
 
+void TMainForm::log(UnicodeString & message, bool force = false) {
+    /*if (force || LogMessages->checked) {
+        OutputTCP->Lines->Add(message);
+    }
+    */
+}
+
 bool TMainForm::SendCommand(UnicodeString command) {
+    if (ShowLastCommandOnly->Checked) {
+        OutputTCP->Lines->Clear();
+    }
 	OutputTCP->Lines->Add("Wysy³am zapytanie do miernika: " + command);
 
     if (IdTelnet1->Connected() == false) {
@@ -75,6 +85,9 @@ void __fastcall TMainForm::IdTelnet1DataAvailable(TIdTelnet *Sender, const TIdBy
     OutputTCP->Lines->Add("Koniec odpowiedzi.");
 
     if (MeasureStart->Enabled == false) {
+        if (DotToComma->Checked) {
+            response = StringReplace(response, ".", ",", TReplaceFlags() << rfReplaceAll);
+        }
         TStringDynArray measurements = SplitString(response, ";");
         for (int i = 0; i < measurements.Length; i++) {
             TStringDynArray value = SplitString(measurements[i], " ");
@@ -201,6 +214,7 @@ void __fastcall TMainForm::RestoreSettingsClick(TObject *Sender)
     MeasureAction->Interval = settings->ReadInteger("Measurements", "Interval", MeasureAction->Interval);
 
     DotToComma->Checked = settings->ReadBool("DDE", "ConvertDotToComma", DotToComma->Checked);
+    ShowLastCommandOnly->Checked = settings->ReadBool("Logging", "ShowLastCommentOnly", ShowLastCommandOnly->Checked);
 }
 //---------------------------------------------------------------------------
 
@@ -211,6 +225,15 @@ void __fastcall TMainForm::SaveSettingsClick(TObject *Sender)
     settings->WriteString("Measurements", "Query", MeasureQuery->Text);
     settings->WriteInteger("Measurements", "Interval", MeasureAction->Interval);
     settings->WriteBool("DDE", "ConvertDotToComma", DotToComma->Checked);
+    settings->WriteBool("Logging", "ShowLastCommentOnly", ShowLastCommandOnly->Checked);
 }
 //---------------------------------------------------------------------------
+
+void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
+{
+    if (IdTelnet1->Connected()) IdTelnet1->Disconnect();
+}
+//---------------------------------------------------------------------------
+
+
 
