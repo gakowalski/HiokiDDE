@@ -215,6 +215,7 @@ void __fastcall TMainForm::RestoreSettingsClick(TObject *Sender)
 
     DotToComma->Checked = settings->ReadBool("DDE", "ConvertDotToComma", DotToComma->Checked);
     ShowLastCommandOnly->Checked = settings->ReadBool("Logging", "ShowLastCommentOnly", ShowLastCommandOnly->Checked);
+    OutputTCP->Font->Size = settings->ReadInteger("Logging", "FontSize", OutputTCP->Font->Size);
 }
 //---------------------------------------------------------------------------
 
@@ -226,12 +227,14 @@ void __fastcall TMainForm::SaveSettingsClick(TObject *Sender)
     settings->WriteInteger("Measurements", "Interval", MeasureAction->Interval);
     settings->WriteBool("DDE", "ConvertDotToComma", DotToComma->Checked);
     settings->WriteBool("Logging", "ShowLastCommentOnly", ShowLastCommandOnly->Checked);
+    settings->WriteInteger("Logging", "FontSize", OutputTCP->Font->Size);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
 {
     if (IdTelnet1->Connected()) IdTelnet1->Disconnect();
+	SaveSettingsClick(this);
 }
 //---------------------------------------------------------------------------
 

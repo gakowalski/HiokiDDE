@@ -1,11 +1,9 @@
 object MainForm: TMainForm
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
-  BorderStyle = bsSingle
   Caption = 'Hioki DDE'
-  ClientHeight = 371
-  ClientWidth = 634
+  ClientHeight = 441
+  ClientWidth = 630
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -105,18 +103,21 @@ object MainForm: TMainForm
   object OutputTCP: TMemo
     Left = 0
     Top = 215
-    Width = 634
-    Height = 156
+    Width = 630
+    Height = 226
     Align = alBottom
+    Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Charset = EASTEUROPE_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -16
     Font.Name = 'Courier New'
     Font.Style = []
     ParentFont = False
     ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 2
+    ExplicitWidth = 634
+    ExplicitHeight = 156
   end
   object GroupBox3: TGroupBox
     Left = 8
@@ -168,8 +169,6 @@ object MainForm: TMainForm
       Width = 185
       Height = 17
       Caption = 'DDE: Zamie'#324' kropk'#281' na przecinek'
-      Checked = True
-      State = cbChecked
       TabOrder = 3
     end
     object ShowLastCommandOnly: TCheckBox
