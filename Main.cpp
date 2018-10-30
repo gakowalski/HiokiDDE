@@ -39,8 +39,12 @@ bool TMainForm::SendCommand(UnicodeString command) {
     }
 
  	if (IdTelnet1->Connected()) {
-        IdTelnet1->IOHandler->Write(get_command(command));
-        OutputTCP->Lines->Add("Zapytanie wys³ane.");
+        try {
+	        IdTelnet1->IOHandler->Write(get_command(command));
+            OutputTCP->Lines->Add("Zapytanie wys³ane.");
+        } catch (EIdSocketError &e) {
+             OutputTCP->Lines->Add(e.ToString());
+        }
 	} else {
         OutputTCP->Lines->Add("Utracono po³¹czenie!");
         return false;
@@ -216,6 +220,10 @@ void __fastcall TMainForm::RestoreSettingsClick(TObject *Sender)
     DotToComma->Checked = settings->ReadBool("DDE", "ConvertDotToComma", DotToComma->Checked);
     ShowLastCommandOnly->Checked = settings->ReadBool("Logging", "ShowLastCommentOnly", ShowLastCommandOnly->Checked);
     OutputTCP->Font->Size = settings->ReadInteger("Logging", "FontSize", OutputTCP->Font->Size);
+
+    MainForm->WindowState = settings->ReadInteger("Window", "State", MainForm->WindowState);
+    MainForm->Width = settings->ReadInteger("Window", "Width", MainForm->Width);
+    MainForm->Height = settings->ReadInteger("Window", "Height", MainForm->Height);
 }
 //---------------------------------------------------------------------------
 
@@ -228,6 +236,9 @@ void __fastcall TMainForm::SaveSettingsClick(TObject *Sender)
     settings->WriteBool("DDE", "ConvertDotToComma", DotToComma->Checked);
     settings->WriteBool("Logging", "ShowLastCommentOnly", ShowLastCommandOnly->Checked);
     settings->WriteInteger("Logging", "FontSize", OutputTCP->Font->Size);
+    settings->WriteInteger("Window", "State", MainForm->WindowState);
+    settings->WriteInteger("Window", "Width", MainForm->Width);
+    settings->WriteInteger("Window", "Height", MainForm->Height);
 }
 //---------------------------------------------------------------------------
 

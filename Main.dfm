@@ -116,8 +116,6 @@ object MainForm: TMainForm
     ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 2
-    ExplicitWidth = 634
-    ExplicitHeight = 156
   end
   object GroupBox3: TGroupBox
     Left = 8
