@@ -214,10 +214,18 @@ object MainForm: TMainForm
     Left = 551
     Top = 162
     Width = 75
-    Height = 47
+    Height = 23
     Caption = 'Test DDE'
     TabOrder = 7
     OnClick = TestDDEClick
+  end
+  object FakeData: TCheckBox
+    Left = 551
+    Top = 191
+    Width = 97
+    Height = 17
+    Caption = 'Testuj DDE'
+    TabOrder = 8
   end
   object Pomiary: TDdeServerConv
     Left = 72

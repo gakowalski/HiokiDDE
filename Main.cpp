@@ -163,8 +163,23 @@ void __fastcall TMainForm::MeasureActionTimer(TObject *Sender)
 {
     if (MeasureStop->Enabled) {
     	OutputTCP->Lines->Add(Now().TimeString());
-        if (SendCommand(":HEADER ON;MEAS? " + MeasureQuery->Text) == false) {
-        	MeasureStop->Click();
+        if (FakeData->Checked == false) {
+            if (SendCommand(":HEADER ON;MEAS? " + MeasureQuery->Text) == false) {
+                MeasureStop->Click();
+            }
+        } else {
+	        TStringDynArray values = SplitString(MeasureQuery->Text, ",");
+
+            AnsiString fake_sample;
+
+            for (int i = 0; i < values.Length; i++) {
+                if (i) fake_sample += ";";
+                fake_sample += values[i] + " +" + Random(777) + "." + Random(99) + "E+" + Random(9);
+            }
+            fake_sample += "\n";
+
+            //char * result = "UFND1 +777.77E+9;UFND2 +777.77E+9;UFND3 +777.77E+9;IFND1 +777.77E+9;IFND2 +777.77E+9;IFND3 +777.77E+9;PTAV0 +00.000E+3;ITAV1 +00.000E+0;ITAV2 +00.000E+0;ITAV3 +00.000E+0\n";
+            IdTelnet1DataAvailable(NULL, RawToBytes(fake_sample.c_str(), strlen(fake_sample.c_str())));
         }
     }
 }
@@ -248,6 +263,7 @@ void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
 	SaveSettingsClick(this);
 }
 //---------------------------------------------------------------------------
+
 
 
 

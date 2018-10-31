@@ -124,8 +124,8 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <DynamicRTL>false</DynamicRTL>
-        <VerInfo_Build>13</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=Grzegorz Kowalski;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.13;InternalName=HiokiDDE;LegalCopyright=Grzegorz Kowalski;LegalTrademarks=;OriginalFilename=;ProgramID=$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>14</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=Grzegorz Kowalski;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.14;InternalName=HiokiDDE;LegalCopyright=Grzegorz Kowalski;LegalTrademarks=;OriginalFilename=;ProgramID=$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <UsePackages>false</UsePackages>
         <LinkPackageStatics>rtl.lib;vcl.lib;vclx.lib;IndyCore.lib;IndySystem.lib;IndyProtocols.lib</LinkPackageStatics>
     </PropertyGroup>

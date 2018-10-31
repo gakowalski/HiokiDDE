@@ -46,6 +46,7 @@ __published:	// IDE-managed Components
 	TButton *RestoreSettings;
 	TButton *TestDDE;
 	TCheckBox *ShowLastCommandOnly;
+	TCheckBox *FakeData;
 	void __fastcall SendRequestClick(TObject *Sender);
 	void __fastcall IdTCPClient1Connected(TObject *Sender);
 	void __fastcall IdTCPClient1Disconnected(TObject *Sender);
