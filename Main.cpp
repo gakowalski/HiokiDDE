@@ -93,11 +93,35 @@ void __fastcall TMainForm::IdTelnet1DataAvailable(TIdTelnet *Sender, const TIdBy
             response = StringReplace(response, ".", ",", TReplaceFlags() << rfReplaceAll);
         }
         TStringDynArray measurements = SplitString(response, ";");
+
+        ArkuszPomiarowy->ColCount = 1;
+        ArkuszPomiarowy->RowCount = 5;
+        ArkuszPomiarowy->Cells[0][0] = "\\";
+        ArkuszPomiarowy->Cells[0][1] = "Channel 0";
+        ArkuszPomiarowy->Cells[0][2] = "Channel 1";
+        ArkuszPomiarowy->Cells[0][3] = "Channel 2";
+        ArkuszPomiarowy->Cells[0][4] = "Channel 3";
+
+        // ArkuszPomiarowy->Rows[0]->IndexOf()
+
         for (int i = 0; i < measurements.Length; i++) {
             TStringDynArray value = SplitString(measurements[i], " ");
             if (MainForm->FindComponent(value[0])) {
                 TDdeServerItem * item = (TDdeServerItem *) MainForm->FindComponent(value[0]);
                 item->Text = value[1];
+
+                UnicodeString name = value[0], channel = value[0];
+                name = name.SubString(0,name.Length()-1);
+                // channel =
+
+                if (ArkuszPomiarowy->Rows[0]->IndexOf(name) < 0) {
+                    ArkuszPomiarowy->ColCount++;
+                    UnicodeString tmp = value[0];
+                    ArkuszPomiarowy->Rows[0]->Add(tmp.SubString(0,tmp.Length()-1));
+                    ArkuszPomiarowy->Cells[ArkuszPomiarowy->ColCount-1][value[0].SubString(value[0].Length(),1).ToIntDef(0)+1] = value[1];
+                } else {
+                    ArkuszPomiarowy->Cells[ArkuszPomiarowy->Rows[0]->IndexOf(name)][value[0].SubString(value[0].Length(),1).ToIntDef(0)+1] = value[1];
+                }
             } else {
                 OutputTCP->Lines->Add("Nie moge wys³aæ wartoœci " + value[0] + " przez DDE");
             }
@@ -263,6 +287,7 @@ void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
 	SaveSettingsClick(this);
 }
 //---------------------------------------------------------------------------
+
 
 
 

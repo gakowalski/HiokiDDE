@@ -18,6 +18,8 @@
 #include <Vcl.ExtCtrls.hpp>
 #include <IniFiles.hpp>
 #include <StrUtils.hpp>
+#include <Vcl.ComCtrls.hpp>
+#include <Vcl.Grids.hpp>
 //---------------------------------------------------------------------------
 class TMainForm : public TForm
 {
@@ -29,7 +31,6 @@ __published:	// IDE-managed Components
 	TLabel *Label1;
 	TLabel *Label2;
 	TGroupBox *GroupBox2;
-	TMemo *OutputTCP;
 	TComboBox *CommandList;
 	TButton *SendRequest;
 	TLabel *Label3;
@@ -44,9 +45,13 @@ __published:	// IDE-managed Components
 	TCheckBox *DotToComma;
 	TButton *SaveSettings;
 	TButton *RestoreSettings;
-	TButton *TestDDE;
 	TCheckBox *ShowLastCommandOnly;
 	TCheckBox *FakeData;
+	TPageControl *PageControl1;
+	TTabSheet *TabSheet1;
+	TTabSheet *TabSheet2;
+	TMemo *OutputTCP;
+	TStringGrid *ArkuszPomiarowy;
 	void __fastcall SendRequestClick(TObject *Sender);
 	void __fastcall IdTCPClient1Connected(TObject *Sender);
 	void __fastcall IdTCPClient1Disconnected(TObject *Sender);

@@ -1,9 +1,9 @@
 object MainForm: TMainForm
-  Left = 0
-  Top = 0
+  Left = 309
+  Top = 225
   Caption = 'Hioki DDE'
-  ClientHeight = 441
-  ClientWidth = 630
+  ClientHeight = 447
+  ClientWidth = 631
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,7 @@ object MainForm: TMainForm
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
@@ -100,30 +101,13 @@ object MainForm: TMainForm
       OnClick = SendRequestClick
     end
   end
-  object OutputTCP: TMemo
-    Left = 0
-    Top = 215
-    Width = 630
-    Height = 226
-    Align = alBottom
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    Font.Charset = EASTEUROPE_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Courier New'
-    Font.Style = []
-    ParentFont = False
-    ReadOnly = True
-    ScrollBars = ssVertical
-    TabOrder = 2
-  end
   object GroupBox3: TGroupBox
     Left = 8
     Top = 95
     Width = 536
     Height = 114
     Caption = 'Pomiar'
-    TabOrder = 3
+    TabOrder = 2
     object Label_for_MeasureQuery: TLabel
       Left = 22
       Top = 61
@@ -186,7 +170,7 @@ object MainForm: TMainForm
     Width = 75
     Height = 53
     Caption = 'Wyczy'#347#263' podgl'#261'd komunikat'#243'w'
-    TabOrder = 4
+    TabOrder = 3
     WordWrap = True
     OnClick = ClearOutputTCPClick
   end
@@ -196,7 +180,7 @@ object MainForm: TMainForm
     Width = 75
     Height = 42
     Caption = 'Zachowaj ustawienia'
-    TabOrder = 5
+    TabOrder = 4
     WordWrap = True
     OnClick = SaveSettingsClick
   end
@@ -206,43 +190,81 @@ object MainForm: TMainForm
     Width = 75
     Height = 41
     Caption = 'Przywr'#243#263' ustawienia'
-    TabOrder = 6
+    TabOrder = 5
     WordWrap = True
     OnClick = RestoreSettingsClick
   end
-  object TestDDE: TButton
-    Left = 551
-    Top = 162
-    Width = 75
-    Height = 23
-    Caption = 'Test DDE'
-    TabOrder = 7
-    OnClick = TestDDEClick
-  end
   object FakeData: TCheckBox
-    Left = 551
-    Top = 191
+    Left = 550
+    Top = 162
     Width = 97
-    Height = 17
+    Height = 23
     Caption = 'Testuj DDE'
-    TabOrder = 8
+    TabOrder = 6
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 215
+    Width = 631
+    Height = 232
+    ActivePage = TabSheet2
+    Align = alBottom
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    TabOrder = 7
+    object TabSheet1: TTabSheet
+      Caption = 'Podgl'#261'd komunikacji z urz'#261'dzeniem'
+      object OutputTCP: TMemo
+        Left = 0
+        Top = 0
+        Width = 623
+        Height = 204
+        Align = alClient
+        Font.Charset = EASTEUROPE_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Courier New'
+        Font.Style = []
+        ParentFont = False
+        ReadOnly = True
+        ScrollBars = ssVertical
+        TabOrder = 0
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Podgl'#261'd odbieranych warto'#347'ci'
+      ImageIndex = 1
+      object ArkuszPomiarowy: TStringGrid
+        Left = 0
+        Top = 0
+        Width = 623
+        Height = 204
+        Align = alClient
+        DrawingStyle = gdsClassic
+        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing]
+        TabOrder = 0
+        ExplicitLeft = 272
+        ExplicitTop = 72
+        ExplicitWidth = 320
+        ExplicitHeight = 120
+      end
+    end
   end
   object Pomiary: TDdeServerConv
-    Left = 72
-    Top = 224
+    Left = 80
+    Top = 392
   end
   object IdTelnet1: TIdTelnet
     OnDisconnected = IdTCPClient1Disconnected
     OnConnected = IdTCPClient1Connected
     OnDataAvailable = IdTelnet1DataAvailable
     Terminal = 'dumb'
-    Left = 16
-    Top = 224
+    Left = 24
+    Top = 392
   end
   object MeasureAction: TTimer
     Enabled = False
     OnTimer = MeasureActionTimer
     Left = 136
-    Top = 224
+    Top = 392
   end
 end
